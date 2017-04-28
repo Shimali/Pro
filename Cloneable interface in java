@@ -1,0 +1,68 @@
+/*The clone( ) method generates a duplicate copy of the object on which it is called.
+Only classes that implement the Cloneable interface can be cloned.
+The Cloneable interface defines no members.
+It is used to indicate that a class allows a bitwise copy of an object (that is, a clone) to be made.
+If you try to call clone( ) on a class that does not implement Cloneable, a CloneNotSupportedException is thrown.
+When a clone is made, the constructor for the object being cloned is not called. 
+A clone is simply an exact copy of the original.*/
+
+// Demonstrate the clone() method. 
+class TestClone implements Cloneable { 
+int a; 
+double b; 
+// This method calls Object's clone(). 
+TestClone cloneTest() { 
+try { 
+// call clone in Object. 
+return (TestClone) super.clone(); 
+} catch(CloneNotSupportedException e) { 
+System.out.println("Cloning not allowed."); 
+return this; 
+} 
+} 
+}
+
+class CloneDemo { 
+public static void main(String args[]) { 
+TestClone x1 = new TestClone(); 
+TestClone x2; 
+x1.a = 10; 
+x1.b = 20.98; 
+x2 = x1.cloneTest(); // clone x1 
+System.out.println("x1: " + x1.a + " " + x1.b); 
+System.out.println("x2: " + x2.a + " " + x2.b); 
+} 
+}
+
+/*Here, the method cloneTest( ) calls clone( ) in Object and returns the result.
+Notice that the object returned by clone( ) must be cast into its appropriate type (TestClone).*/
+//The following example overrides clone( ) so that it can be called from code outside of its class
+
+/ /Override the clone() method. 
+class TestClone implements Cloneable { 
+int a; 
+double b; 
+// clone() is now overridden and is public. 
+public Object clone() { 
+try { 
+// call clone in Object. 
+return super.clone(); 
+} catch(CloneNotSupportedException e) { 
+System.out.println("Cloning not allowed."); 
+return this; 
+} 
+} 
+}
+
+class CloneDemo2 { 
+public static void main(String args[]) { 
+TestClone x1 = new TestClone(); 
+TestClone x2; 
+x1.a = 10; 
+x1.b = 20.98; 
+// here, clone() is called directly. 
+x2 = (TestClone) x1.clone(); 
+System.out.println("x1: " + x1.a + " " + x1.b); 
+System.out.println("x2: " + x2.a + " " + x2.b); 
+} 
+}
